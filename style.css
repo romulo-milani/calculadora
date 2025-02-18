@@ -4,7 +4,6 @@
     height: max-content;
     margin: 90px auto; 
 
-    background-color:rgb(168, 167, 167);
     background-color:rgb(212, 211, 211);
     padding: 20px;
 
@@ -47,8 +46,6 @@
     flex: 2;
     font-size: 40px;
     height: 50%;
-
-    background-color: blueviolet;
 }
 
 /*Botões de Editar*/
@@ -69,7 +66,6 @@
     border: 2px solid black;
     border-radius: 5px;
 
-    background-color: rgb(146, 146, 84);
     background-color: rgb(157, 87, 87);
     color: white;
 }

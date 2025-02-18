@@ -4,6 +4,7 @@ let operando2 = 0;
 let operador = "";
 let tecladoNumerico = document.querySelectorAll(".tecladoNumerico");
 let downTela = document.querySelector(".downtela");
+let topTela = document.querySelector(".toptela");
 let op = document.querySelectorAll(".op");
 
 
@@ -44,14 +45,17 @@ function operar(operandoA, operandoB, operador) {
     }
 }
 
+/*Preenche a tela de baixo */
 function preencherTela(e) {
-    downTela.textContent += e.target.textContent; //preenche a tela de baixo
-    operando1 += e.target.textContent; //armazena o primeiro valor na variavel operando1
+    downTela.textContent += e.target.textContent;
 }
 
+/*Preenche a tela de baixo com o operador, e sobe as informações pra tela de cima*/
 function preencherTelaOperando(e) {
-    operador = e.target.textContent; // armazena o operador digitado na variavel operador
-    downTela.textContent += ` ${operador}`; //preenche a tela de baixo com o operador
+    topTela.textContent = downTela.textContent;
+    downTela.textContent = ` ${e.target.textContent} `;
+    operador = e.target.textContent;
+    operando1 = topTela.textContent;
 };
 
 /*Preencher a tela quando o usuário digita no teclado numérico*/
