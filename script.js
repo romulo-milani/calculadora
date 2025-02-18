@@ -6,6 +6,7 @@ let tecladoNumerico = document.querySelectorAll(".tecladoNumerico");
 let downTela = document.querySelector(".downtela");
 let topTela = document.querySelector(".toptela");
 let op = document.querySelectorAll(".op");
+let igualBtn = document.querySelector(".igual");
 
 
 /*Funções da Calculadora*/
@@ -39,7 +40,7 @@ function operar(operandoA, operandoB, operador) {
             return multiplicar(operandoA, operandoB);
             break;
 
-        case "/":
+        case "÷":
             return dividir(operandoA, operandoB);
             break;
     }
@@ -53,10 +54,17 @@ function preencherTela(e) {
 /*Preenche a tela de baixo com o operador, e sobe as informações pra tela de cima*/
 function preencherTelaOperando(e) {
     topTela.textContent = downTela.textContent;
-    downTela.textContent = ` ${e.target.textContent} `;
+    downTela.textContent = `${e.target.textContent} `;
     operador = e.target.textContent;
-    operando1 = topTela.textContent;
+    operando1 = topTela.textContent * 1; //salva a variavel operando1 e transforma em numero
 };
+
+function resultado(e) {
+    operando2 = downTela.textContent.slice(2) * 1; //salva a variável operando2 e transforma em numero
+    let resultado = operar(operando1, operando2, operador);
+    topTela.textContent = "";
+    downTela.textContent = `${resultado}`;
+}
 
 /*Preencher a tela quando o usuário digita no teclado numérico*/
 for (let i = 0; i < tecladoNumerico.length; i++) {
@@ -67,5 +75,8 @@ for (let i = 0; i < tecladoNumerico.length; i++) {
 for (let i = 0; i < op.length; i++) {
     op[i].addEventListener("click", preencherTelaOperando);
 }
+
+/*Função operar() quando usuário pressiona botão de igual */
+igualBtn.addEventListener("click", resultado);
 
 
