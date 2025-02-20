@@ -57,10 +57,17 @@ function preencherTela(e) {
 
 /*Preenche a tela de baixo com o operador, e sobe as informações pra tela de cima*/
 function preencherTelaOperando(e) {
-    topTela.textContent = downTela.textContent;
-    downTela.textContent = `${e.target.textContent}`;
-    operador = e.target.textContent;
-    operando1 = topTela.textContent * 1; //salva a variavel operando1 e transforma em numero
+    //se tiver apenas o operador na tela de baixo, não mostrar o resultado, mas sim apenas trocar o operador
+    let texto = downTela.textContent;
+    if (texto == "+" || texto == "-" || texto == "*" || texto == "÷") { 
+        downTela.textContent = e.target.textContent;
+        operador = e.target.textContent;
+    } else {
+        topTela.textContent = downTela.textContent;
+        downTela.textContent = `${e.target.textContent}`;
+        operador = e.target.textContent;
+        operando1 = topTela.textContent * 1; //salva a variavel operando1 e transforma em numero
+    }    
 };
 
 /*mostra o resultado*/
@@ -103,5 +110,3 @@ igualBtn.addEventListener("click", resultado);
 limparBtn.addEventListener("click", limpar);
 
 backspaceBtn.addEventListener("click", limparUltimoCaractere);
-
-
