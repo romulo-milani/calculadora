@@ -60,7 +60,7 @@
     color: white;
     
 }
-.backBtn {
+.backspaceBtn {
     font-size: 30px;
     grid-column: 3/5;
     border: 2px solid black;

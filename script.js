@@ -8,6 +8,7 @@ let topTela = document.querySelector(".toptela");
 let op = document.querySelectorAll(".op");
 let igualBtn = document.querySelector(".igual");
 let limparBtn = document.querySelector(".limparBtn");
+let backspaceBtn = document.querySelector(".backspaceBtn");
 
 
 /*Funções da Calculadora*/
@@ -57,26 +58,34 @@ function preencherTela(e) {
 /*Preenche a tela de baixo com o operador, e sobe as informações pra tela de cima*/
 function preencherTelaOperando(e) {
     topTela.textContent = downTela.textContent;
-    downTela.textContent = `${e.target.textContent} `;
+    downTela.textContent = `${e.target.textContent}`;
     operador = e.target.textContent;
     operando1 = topTela.textContent * 1; //salva a variavel operando1 e transforma em numero
 };
 
 /*mostra o resultado*/
 function resultado(e) {
-    operando2 = downTela.textContent.slice(2) * 1; //salva a variável operando2 e transforma em numero
+    operando2 = downTela.textContent.slice(1) * 1; //salva a variável operando2 e transforma em numero
     let resultado = operar(operando1, operando2, operador);
     topTela.textContent = "";
     downTela.textContent = `${resultado}`;
 }
 
-/*limpa a tela*/
+
 function limpar() {
     operando1 = 0;
     operando2 = 0;
     operador = "";
     topTela.textContent = "";
     downTela.textContent = "";
+}
+
+function limparUltimoCaractere() {
+    let texto = downTela.textContent;
+
+    if (!(texto == "+" || texto == "-" || texto == "*" || texto == "÷")) {
+        downTela.textContent = texto.slice(0, -1);
+    }
 }
 
 /*Adicionar eventListener*/
@@ -92,5 +101,7 @@ for (let i = 0; i < op.length; i++) {
 igualBtn.addEventListener("click", resultado);
 
 limparBtn.addEventListener("click", limpar);
+
+backspaceBtn.addEventListener("click", limparUltimoCaractere);
 
 
