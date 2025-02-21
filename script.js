@@ -62,12 +62,21 @@ function preencherTelaOperando(e) {
     if (texto == "+" || texto == "-" || texto == "*" || texto == "÷") { 
         downTela.textContent = e.target.textContent;
         operador = e.target.textContent;
+    } else if ((texto[0] == "+" || texto[0] == "-" || texto[0] == "*" || texto[0] == "÷") && (typeof texto[1]*1 != NaN) ) {
+        let novoOperador = e.target.textContent;
+        operador = texto[0];
+        operando2 = texto.slice(1)*1;
+        let resultado = operar(operando1, operando2, operador);
+        topTela.textContent = resultado;
+        downTela.textContent = novoOperador;
+        operador = novoOperador;
+        operando1 = resultado;
     } else {
         topTela.textContent = downTela.textContent;
         downTela.textContent = `${e.target.textContent}`;
         operador = e.target.textContent;
         operando1 = topTela.textContent * 1; //salva a variavel operando1 e transforma em numero
-    }    
+    }
 };
 
 /*mostra o resultado*/
