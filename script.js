@@ -43,7 +43,12 @@ function operar(operandoA, operandoB, operador) {
             break;
 
         case "÷":
-            return dividir(operandoA, operandoB);
+            if (operandoB !== 0) {
+                return dividir(operandoA, operandoB)
+            } else {  
+                console.log("divisão por zero")              
+                return "divisão por zero";
+            };
             break;
     }
 }
@@ -67,10 +72,14 @@ function preencherTelaOperando(e) {
         operador = texto[0];
         operando2 = texto.slice(1)*1;
         let resultado = operar(operando1, operando2, operador);
+        if (resultado == "divisão por zero") {
+            divisaoPorZero();
+        } else {
         topTela.textContent = resultado;
         downTela.textContent = novoOperador;
         operador = novoOperador;
         operando1 = resultado;
+        }
     } else {
         topTela.textContent = downTela.textContent;
         downTela.textContent = `${e.target.textContent}`;
@@ -90,12 +99,16 @@ function resultado(e) {
     if (textoEmCima !== "" && (tipoNumeroDeBaixo == "string")) {
         operando2 = downTela.textContent.slice(1) * 1; //multiplica por 1 pra transformar em numero
         let resultado = operar(operando1, operando2, operador);
-        topTela.textContent = "";
-        downTela.textContent = `${resultado}`;
+
+        if (resultado == "divisão por zero") {
+            divisaoPorZero();
+        } else {
+            topTela.textContent = "";
+            downTela.textContent = `${resultado}`;
+        }        
     }
     
 }
-
 
 function limpar() {
     operando1 = 0;
@@ -103,6 +116,11 @@ function limpar() {
     operador = "";
     topTela.textContent = "";
     downTela.textContent = "";
+}
+
+function divisaoPorZero() {
+    limpar();
+    topTela.textContent = "Divisão por Zero!";
 }
 
 function limparUltimoCaractere() {
@@ -128,3 +146,5 @@ igualBtn.addEventListener("click", resultado);
 limparBtn.addEventListener("click", limpar);
 
 backspaceBtn.addEventListener("click", limparUltimoCaractere);
+
+//corrigir bug onde a pessoa pode digitar um operador sem exitir nada na tela, ou com a mensagem divisão por zero na tela de cima
