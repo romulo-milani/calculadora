@@ -45,8 +45,7 @@ function operar(operandoA, operandoB, operador) {
         case "÷":
             if (operandoB !== 0) {
                 return dividir(operandoA, operandoB)
-            } else {  
-                console.log("divisão por zero")              
+            } else {         
                 return "divisão por zero";
             };
             break;
@@ -62,30 +61,37 @@ function preencherTela(e) {
 
 /*Preenche a tela de baixo com o operador, e sobe as informações pra tela de cima*/
 function preencherTelaOperando(e) {
-    //se tiver apenas o operador na tela de baixo, não mostrar o resultado, mas sim apenas trocar o operador
-    let texto = downTela.textContent;
-    if (texto == "+" || texto == "-" || texto == "*" || texto == "÷") { 
-        downTela.textContent = e.target.textContent;
-        operador = e.target.textContent;
-    } else if ((texto[0] == "+" || texto[0] == "-" || texto[0] == "*" || texto[0] == "÷") && (typeof texto[1]*1 != NaN) ) {
-        let novoOperador = e.target.textContent;
-        operador = texto[0];
-        operando2 = texto.slice(1)*1;
-        let resultado = operar(operando1, operando2, operador);
-        if (resultado == "divisão por zero") {
-            divisaoPorZero();
-        } else {
-        topTela.textContent = resultado;
-        downTela.textContent = novoOperador;
-        operador = novoOperador;
-        operando1 = resultado;
-        }
+    //se não existir um número na tela de cima, não permitir adicionar um operador
+    console.log(downTela.textContent == "");
+    if((topTela.textContent == "" || topTela.textContent == "Divisão por Zero!") && (downTela.textContent == "")) {
+        //não fazer nada
     } else {
-        topTela.textContent = downTela.textContent;
-        downTela.textContent = `${e.target.textContent}`;
-        operador = e.target.textContent;
-        operando1 = topTela.textContent * 1; //salva a variavel operando1 e transforma em numero
+        //se tiver apenas o operador na tela de baixo, não mostrar o resultado, mas sim apenas trocar o operador
+        let texto = downTela.textContent;
+        if (texto == "+" || texto == "-" || texto == "*" || texto == "÷") { 
+            downTela.textContent = e.target.textContent;
+            operador = e.target.textContent;
+        } else if ((texto[0] == "+" || texto[0] == "-" || texto[0] == "*" || texto[0] == "÷") && (typeof texto[1]*1 != NaN) ) {
+            let novoOperador = e.target.textContent;
+            operador = texto[0];
+            operando2 = texto.slice(1)*1;
+            let resultado = operar(operando1, operando2, operador);
+            if (resultado == "divisão por zero") {
+                divisaoPorZero();
+            } else {
+            topTela.textContent = resultado;
+            downTela.textContent = novoOperador;
+            operador = novoOperador;
+            operando1 = resultado;
+            }
+        } else {
+            topTela.textContent = downTela.textContent;
+            downTela.textContent = `${e.target.textContent}`;
+            operador = e.target.textContent;
+            operando1 = topTela.textContent * 1; //salva a variavel operando1 e transforma em numero
+        }
     }
+        
 };
 
 /*mostra o resultado*/
@@ -95,18 +101,24 @@ function resultado(e) {
     let numeroDeBaixo = textoEmBaixo[1];
     let tipoNumeroDeBaixo = typeof numeroDeBaixo;
 
-    //avaliar se as duas telas estão preenchidas com numeros antes de realizar a operação
-    if (textoEmCima !== "" && (tipoNumeroDeBaixo == "string")) {
-        operando2 = downTela.textContent.slice(1) * 1; //multiplica por 1 pra transformar em numero
-        let resultado = operar(operando1, operando2, operador);
+    if (topTela.textContent == "Divisão por Zero!" && downTela.textContent != "") {
+        topTela.textContent = "";
+    } else {
+        //avaliar se as duas telas estão preenchidas com numeros antes de realizar a operação
+        if (textoEmCima !== "" && (tipoNumeroDeBaixo == "string")) {
+            operando2 = downTela.textContent.slice(1) * 1; //multiplica por 1 pra transformar em numero
+            let resultado = operar(operando1, operando2, operador);
 
-        if (resultado == "divisão por zero") {
-            divisaoPorZero();
-        } else {
-            topTela.textContent = "";
-            downTela.textContent = `${resultado}`;
-        }        
+            if (resultado == "divisão por zero") {
+                divisaoPorZero();
+            } else {
+                topTela.textContent = "";
+                downTela.textContent = `${resultado}`;
+            }        
+        }
     }
+
+    
     
 }
 
@@ -147,4 +159,5 @@ limparBtn.addEventListener("click", limpar);
 
 backspaceBtn.addEventListener("click", limparUltimoCaractere);
 
-//corrigir bug onde a pessoa pode digitar um operador sem exitir nada na tela, ou com a mensagem divisão por zero na tela de cima
+//corrigir bug onde a pessoa pode digitar um operador sem exitir nada na tela, ou 
+// com a mensagem divisão por zero na tela de cima
