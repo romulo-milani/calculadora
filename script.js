@@ -57,7 +57,7 @@ function preencherTelaDeBaixo(e) {
 }
 
 /*Função que preenche a tela de baixo com o operador, e copia as informações pra tela de cima*/
-function preencherTelaOperando(e) {
+function preencherTelaOperador(e) {
     //se não existir um número na tela de cima, não permitir adicionar um operador
     if((topTela.textContent == "" || topTela.textContent == "Divisão por Zero!") && (downTela.textContent == "")) {
         //não fazer nada
@@ -142,7 +142,7 @@ for (let i = 0; i < tecladoNumerico.length; i++) {
 }
 
 for (let i = 0; i < op.length; i++) {
-    op[i].addEventListener("click", preencherTelaOperando);
+    op[i].addEventListener("click", preencherTelaOperador);
 }
 
 igualBtn.addEventListener("click", resultado);
