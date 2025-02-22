@@ -81,10 +81,19 @@ function preencherTelaOperando(e) {
 
 /*mostra o resultado*/
 function resultado(e) {
-    operando2 = downTela.textContent.slice(1) * 1; //salva a variável operando2 e transforma em numero
-    let resultado = operar(operando1, operando2, operador);
-    topTela.textContent = "";
-    downTela.textContent = `${resultado}`;
+    let textoEmCima = topTela.textContent;
+    let textoEmBaixo = downTela.textContent;
+    let numeroDeBaixo = textoEmBaixo[1];
+    let tipoNumeroDeBaixo = typeof numeroDeBaixo;
+
+    //avaliar se as duas telas estão preenchidas com numeros antes de realizar a operação
+    if (textoEmCima !== "" && (tipoNumeroDeBaixo == "string")) {
+        operando2 = downTela.textContent.slice(1) * 1; //multiplica por 1 pra transformar em numero
+        let resultado = operar(operando1, operando2, operador);
+        topTela.textContent = "";
+        downTela.textContent = `${resultado}`;
+    }
+    
 }
 
 
