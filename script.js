@@ -9,6 +9,7 @@ let op = document.querySelectorAll(".op");
 let igualBtn = document.querySelector(".igual");
 let limparBtn = document.querySelector(".limparBtn");
 let backspaceBtn = document.querySelector(".backspaceBtn");
+let ponto = document.querySelector(".dot");
 
 
 /*Funções das operações matemáticas*/
@@ -136,6 +137,10 @@ function limparUltimoCaractere() {
     }
 }
 
+function adicionarPonto() {
+    downTela.textContent += ".";
+}
+
 /*Adicionar eventListeners*/
 for (let i = 0; i < tecladoNumerico.length; i++) {
     tecladoNumerico[i].addEventListener('click', preencherTelaDeBaixo);    
@@ -148,6 +153,7 @@ for (let i = 0; i < op.length; i++) {
 igualBtn.addEventListener("click", resultado);
 limparBtn.addEventListener("click", limpar);
 backspaceBtn.addEventListener("click", limparUltimoCaractere);
+ponto.addEventListener("click", adicionarPonto);
 
 //corrigir bug onde a pessoa não consegue começar digitando um número negativo
 //corrigir o design no celular quando o rodapé se sobrepõe à calculadora
