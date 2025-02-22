@@ -93,7 +93,7 @@ function preencherTelaOperador(e) {
 };
 
 /*mostra o resultado ao clicar no botão de igual*/
-function resultado(e) {
+function resultado() {
     let textoEmCima = topTela.textContent;
     let textoEmBaixo = downTela.textContent;
     let numeroDeBaixo = textoEmBaixo[1];
@@ -158,6 +158,99 @@ limparBtn.addEventListener("click", limpar);
 backspaceBtn.addEventListener("click", limparUltimoCaractere);
 ponto.addEventListener("click", adicionarPonto);
 
-//corrigir bug onde a pessoa não consegue começar digitando um número negativo
+//SUPORTE AO TECLADO
+document.addEventListener("keypress", keyboardSupport);
+document.addEventListener("keydown", teclasEspeciais); //o evento keypress não detecta backspace, esc, etc, por isso preciso usar o evento keydown
+
+function keyboardSupport(e) {
+    switch (e.key) {
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+        case "0":
+            {
+                preencherTelaDeBaixoTeclado(e.key);
+            }
+            break;
+        case "+":
+        case "-":
+        case "*":
+        case "/":
+            {
+                preencherTelaDeBaixoOperadorTeclado(e.key);
+            }
+            break;
+        case "Enter":
+            {
+                resultado();    
+            }
+            break;
+        case ",":
+        case ".":
+            {
+                adicionarPonto();
+            }
+    }
+}
+
+function preencherTelaDeBaixoTeclado(numero) {
+    downTela.textContent += numero;
+}
+
+function preencherTelaDeBaixoOperadorTeclado(operadorDigitado) {
+    if (operadorDigitado == "/") {
+        operadorDigitado = "÷";
+    }
+    //se não existir um número na tela de cima, não permitir adicionar um operador
+    if((topTela.textContent == "" || topTela.textContent == "Divisão por Zero!") && (downTela.textContent == "")) {
+        //não fazer nada
+    } else {
+        //se tiver apenas o operador na tela de baixo, não mostrar o resultado, mas sim apenas trocar o operador
+        let texto = downTela.textContent;
+        if (texto == "+" || texto == "-" || texto == "*" || texto == "÷") { 
+            downTela.textContent = operadorDigitado;
+            operador = operadorDigitado;
+        } else if ((texto[0] == "+" || texto[0] == "-" || texto[0] == "*" || texto[0] == "÷") && (typeof texto[1]*1 != NaN) ) {
+            //se a tela de baixo já estiver preenchida com um operador + um número, realizar os cálculos matemáticos e adicionar o operador selecionado depois
+            let novoOperador = operadorDigitado;
+            operador = texto[0];
+            operando2 = texto.slice(1)*1;
+            let resultado = operar(operando1, operando2, operador);
+            if (resultado == "divisão por zero") {
+                divisaoPorZero();
+            } else {
+                topTela.textContent = resultado;
+                downTela.textContent = novoOperador;
+                operador = novoOperador;
+                operando1 = resultado;
+            }
+        } else {
+            topTela.textContent = downTela.textContent;
+            downTela.textContent = `${operadorDigitado}`;
+            operador = operadorDigitado;
+            operando1 = topTela.textContent * 1; //salva a variavel operando1 e transforma em numero
+        }
+    }
+}
+
+function teclasEspeciais(e) {
+    if (e.key == "Backspace") {
+        limparUltimoCaractere();
+    }
+
+    if (e.key == "Escape" || e.key == "Delete") {
+        limpar();
+    }
+}
+
+
 //corrigir o design no celular quando o rodapé se sobrepõe à calculadora
+//adicionar um brilho quando a pessoa digita pelo teclado, mostrando a tecla digitada
+//deixar o brilho ao passar o mouse mais visível
 
