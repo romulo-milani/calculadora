@@ -138,7 +138,10 @@ function limparUltimoCaractere() {
 }
 
 function adicionarPonto() {
-    downTela.textContent += ".";
+    if (downTela.textContent.indexOf(".") == -1) { //se ainda não existir ponto, adicione
+        downTela.textContent += ".";
+    }
+    
 }
 
 /*Adicionar eventListeners*/
