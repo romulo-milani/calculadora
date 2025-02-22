@@ -104,9 +104,11 @@
     color: white;
 }
 
-.limparBtn:hover, .keyBtn:hover, .backBtn:hover {
+.limparBtn:hover, .keyBtn:hover, .backspaceBtn:hover {
     box-shadow: 0 0 5px 5px white;
+    border-color: white;
     transition: all 0.2s ease-in-out;
+    cursor: pointer;
 }
 
 
