@@ -11,7 +11,7 @@ let limparBtn = document.querySelector(".limparBtn");
 let backspaceBtn = document.querySelector(".backspaceBtn");
 
 
-/*Funções da Calculadora*/
+/*Funções das operações matemáticas*/
 function somar(a, b) {
     return a + b;
 }
@@ -52,17 +52,13 @@ function operar(operandoA, operandoB, operador) {
     }
 }
 
-/*Funções*/
-
-/*Preenche a tela de baixo */
-function preencherTela(e) {
+function preencherTelaDeBaixo(e) {
     downTela.textContent += e.target.textContent;
 }
 
-/*Preenche a tela de baixo com o operador, e sobe as informações pra tela de cima*/
+/*Função que preenche a tela de baixo com o operador, e copia as informações pra tela de cima*/
 function preencherTelaOperando(e) {
     //se não existir um número na tela de cima, não permitir adicionar um operador
-    console.log(downTela.textContent == "");
     if((topTela.textContent == "" || topTela.textContent == "Divisão por Zero!") && (downTela.textContent == "")) {
         //não fazer nada
     } else {
@@ -72,6 +68,7 @@ function preencherTelaOperando(e) {
             downTela.textContent = e.target.textContent;
             operador = e.target.textContent;
         } else if ((texto[0] == "+" || texto[0] == "-" || texto[0] == "*" || texto[0] == "÷") && (typeof texto[1]*1 != NaN) ) {
+            //se a tela de baixo já estiver preenchida com um operador + um número, realizar os cálculos matemáticos e adicionar o operador selecionado depois
             let novoOperador = e.target.textContent;
             operador = texto[0];
             operando2 = texto.slice(1)*1;
@@ -79,10 +76,10 @@ function preencherTelaOperando(e) {
             if (resultado == "divisão por zero") {
                 divisaoPorZero();
             } else {
-            topTela.textContent = resultado;
-            downTela.textContent = novoOperador;
-            operador = novoOperador;
-            operando1 = resultado;
+                topTela.textContent = resultado;
+                downTela.textContent = novoOperador;
+                operador = novoOperador;
+                operando1 = resultado;
             }
         } else {
             topTela.textContent = downTela.textContent;
@@ -94,7 +91,7 @@ function preencherTelaOperando(e) {
         
 };
 
-/*mostra o resultado*/
+/*mostra o resultado ao clicar no botão de igual*/
 function resultado(e) {
     let textoEmCima = topTela.textContent;
     let textoEmBaixo = downTela.textContent;
@@ -117,9 +114,6 @@ function resultado(e) {
             }        
         }
     }
-
-    
-    
 }
 
 function limpar() {
@@ -137,16 +131,14 @@ function divisaoPorZero() {
 
 function limparUltimoCaractere() {
     let texto = downTela.textContent;
-
     if (!(texto == "+" || texto == "-" || texto == "*" || texto == "÷")) {
         downTela.textContent = texto.slice(0, -1);
     }
 }
 
-/*Adicionar eventListener*/
-
+/*Adicionar eventListeners*/
 for (let i = 0; i < tecladoNumerico.length; i++) {
-    tecladoNumerico[i].addEventListener('click', preencherTela);    
+    tecladoNumerico[i].addEventListener('click', preencherTelaDeBaixo);    
 }
 
 for (let i = 0; i < op.length; i++) {
@@ -154,10 +146,9 @@ for (let i = 0; i < op.length; i++) {
 }
 
 igualBtn.addEventListener("click", resultado);
-
 limparBtn.addEventListener("click", limpar);
-
 backspaceBtn.addEventListener("click", limparUltimoCaractere);
 
-//corrigir bug onde a pessoa pode digitar um operador sem exitir nada na tela, ou 
-// com a mensagem divisão por zero na tela de cima
+//corrigir bug onde a pessoa não consegue começar digitando um número negativo
+//corrigir o design no celular quando o rodapé se sobrepõe à calculadora
+
