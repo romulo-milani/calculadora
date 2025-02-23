@@ -161,6 +161,7 @@ ponto.addEventListener("click", adicionarPonto);
 //SUPORTE AO TECLADO
 document.addEventListener("keypress", keyboardSupport);
 document.addEventListener("keydown", teclasEspeciais); //o evento keypress não detecta backspace, esc, etc, por isso preciso usar o evento keydown
+document.addEventListener("keyup", removerDestaque);
 
 function keyboardSupport(e) {
     switch (e.key) {
@@ -240,6 +241,7 @@ function preencherTelaDeBaixoOperadorTeclado(operadorDigitado) {
 }
 
 function teclasEspeciais(e) {
+    console.log(e);
     if (e.key == "Backspace") {
         limparUltimoCaractere();
     }
@@ -248,9 +250,4 @@ function teclasEspeciais(e) {
         limpar();
     }
 }
-
-
-//corrigir o design no celular quando o rodapé se sobrepõe à calculadora
-//adicionar um brilho quando a pessoa digita pelo teclado, mostrando a tecla digitada
-//deixar o brilho ao passar o mouse mais visível
 
